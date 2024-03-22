@@ -854,15 +854,15 @@ fn print_usage(use_colors: bool)
 
 fn print_version_short()
 {
-	let mut version = env!("VERGEN_SEMVER_LIGHTWEIGHT").to_string();
-	if version == "UNKNOWN"
+	let mut version = env!("VERGEN_GIT_DESCRIBE").to_string();
+	if version == "VERGEN_IDEMPOTENT_OUTPUT"
 	{
 		version = format!("v{}", env!("CARGO_PKG_VERSION"));
 	}
 
 
-	let mut date = format!("{}, ", env!("VERGEN_COMMIT_DATE"));
-	if date == "UNKNOWN, "
+	let mut date = format!("{}, ", env!("VERGEN_GIT_COMMIT_DATE"));
+	if date == "VERGEN_IDEMPOTENT_OUTPUT, "
 	{
 		date = "".to_string();
 	}
@@ -872,7 +872,7 @@ fn print_version_short()
 		env!("CARGO_PKG_NAME"),
 		version,
 		date,
-		env!("VERGEN_TARGET_TRIPLE"));
+		env!("VERGEN_CARGO_TARGET_TRIPLE"));
 }
 
 

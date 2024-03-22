@@ -1,15 +1,14 @@
-use vergen::{ConstantsFlags, generate_cargo_keys};
+use vergen::EmitBuilder;
 
 
 fn main()
 {
-    let mut flags = ConstantsFlags::empty();
-    flags.toggle(ConstantsFlags::REBUILD_ON_HEAD_CHANGE);
-    flags.toggle(ConstantsFlags::SEMVER_LIGHTWEIGHT);
-    flags.toggle(ConstantsFlags::COMMIT_DATE);
-    flags.toggle(ConstantsFlags::TARGET_TRIPLE);
-    
-    generate_cargo_keys(flags).expect("Unable to generate the cargo keys!");
+    EmitBuilder::builder()
+        .git_describe(false, true, None)
+        .git_commit_date()
+        .cargo_target_triple()
+        .emit()
+        .expect("Unable to generate the cargo keys!");
 
     generate_std();
     generate_tests();
